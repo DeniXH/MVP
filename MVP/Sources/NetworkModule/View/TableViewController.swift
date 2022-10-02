@@ -71,8 +71,7 @@ extension TableViewController: UITableViewDataSource {
 extension TableViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) { //  метод с didSelect отрабатывает нажатие кнопки
         let comment = presenter.comments?[indexPath.row]
-        let detailViewController = ModelBuilder.createDetailModule(comment: comment)
-        navigationController?.pushViewController(detailViewController, animated: true)
+        presenter.tapOnTheComment(comment: comment)
     }
 }
 

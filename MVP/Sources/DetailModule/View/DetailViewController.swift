@@ -26,8 +26,18 @@ class DetailViewController: UIViewController {
         return label
     }()
 
+    private lazy var button: UIButton = {
+        let button = UIButton()
+        button.setTitle("Кнопка", for: .normal)
+        button.backgroundColor = .systemRed
+        button.layer.cornerRadius = 6
+        button.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
+        return button
+    }()
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .white
         setupHierarchy()
         setupLayout()
         presenter.setComment()
@@ -37,18 +47,28 @@ class DetailViewController: UIViewController {
 
     func setupHierarchy() {
         view.addSubview(commentLabel)
+        view.addSubview(button)
     }
 
     func setupLayout() {
 
         commentLabel.translatesAutoresizingMaskIntoConstraints = false
+        button.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
-            commentLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+
+            commentLabel.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+            commentLabel.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor),
             commentLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             commentLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            commentLabel.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+            
+            button.topAnchor.constraint(equalTo: commentLabel.bottomAnchor, constant: 50),
+            button.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
+    }
+
+   @objc func buttonPressed() {
+       presenter.tap()
     }
 }
 
